@@ -1,103 +1,205 @@
-# Mission-Sim
+# Mission‑Sim
 
-Mission-Sim is a lightweight simulation framework supporting the development of quantum computing satellites and secure orbital systems. It provides building blocks for orbital mechanics, mission architecture, and autonomy-ready simulation workflows used for research and early-stage prototyping.
+[![Build Status](https://img.shields.io/badge/build-pending-lightgrey)]() [![PyPI](https://img.shields.io/badge/pypi-unstable-orange)]() [![License: MIT](https://img.shields.io/badge/license-MIT-blue)]() [![Docs](https://img.shields.io/badge/docs-inprogress-lightgrey)]()
 
-## Table of Contents
+Mission‑Sim is a lightweight, research‑oriented simulation framework for developing and experimenting with quantum‑aware satellites and secure orbital systems. It provides modular building blocks for orbital mechanics, mission architecture, autonomy, sensors, and communications to accelerate reproducible space‑systems research.
+
+- Homepage / project: SPACE - ℵ
+- Status: Research prototype (API may change)
+
+## Table of contents
+
 - [Overview](#overview)
-- [Scope](#scope)
-- [Features](#features)
+- [Highlights](#highlights)
 - [Status](#status)
 - [Quick start](#quick-start)
   - [Prerequisites](#prerequisites)
   - [Install](#install)
-  - [Run a basic example](#run-a-basic-example)
-- [Examples](#examples)
+  - [Run a basic example (CLI)](#run-a-basic-example-cli)
+  - [Run a basic example (Python)](#run-a-basic-example-python)
+- [Examples & Notebooks](#examples--notebooks)
 - [Development](#development)
 - [Contributing](#contributing)
-- [Citing & License](#citing--license)
+- [Citing](#citing)
+- [License](#license)
 - [Contact](#contact)
 
 ## Overview
-Mission-Sim aims to reduce the friction of building and experimenting with space-mission concepts by offering:
-- modular simulators for orbital motion and mission operations,
-- interfaces for plugging in autonomy, sensors, and communications models,
-- a research-oriented, software-first approach so experiments are reproducible and shareable.
 
-## Scope
-- Orbital mechanics foundations
-- Autonomy-ready mission architecture
-- Research-oriented, software-first development
+Mission‑Sim aims to reduce friction when building and experimenting with space‑mission concepts by offering:
 
-## Features
-- Light-weight orbital propagators and utilities
+- modular simulators for orbital motion and mission operations
+- interfaces for autonomy, sensor, and communications models
+- hooks for quantum payload models and secure‑link experimentation
+- example scenarios and reproducible notebooks to accelerate research
+
+## Highlights
+
+- Lightweight orbital propagators and utility functions
 - Mission architecture primitives (tasks, agents, timelines)
-- Hook points for adding sensors, communication links, and quantum payload models
-- Example scenarios to accelerate research and demonstration
+- Extensible sensors, comms links, and payload hooks
+- Designed for reproducibility and easy sharing of scenarios
 
 ## Status
-Phase 0 — Research & simulation  
-Active research prototype. Expect API changes and experimental modules. See the CHANGELOG or issues for roadmap and milestones.
+
+Phase 0 — Research & simulation
+
+Active research prototype. Expect API changes and experimental modules. See the CHANGELOG and issues for roadmap and milestones.
+
+---
 
 ## Quick start
 
 ### Prerequisites
-- Build tools and dependencies listed in `requirements.txt` (or `pyproject.toml`, etc.)
 
-### Install
-Clone the repo and install dependencies:
+- Python 3.10+ (adjust to the project’s supported versions)
+- Git
+- Optional: virtual environment tooling (venv, pipenv, poetry)
+
+### Install (local editable)
+
+Clone and install locally:
 
 ```bash
 git clone https://github.com/SPACE-ALEPH/mission-sim.git
 cd mission-sim
-# Example (adjust to your project's actual install method):
 python -m venv .venv
-source .venv/bin/activate
+source .venv/bin/activate   # macOS / Linux
+# On Windows: .venv\Scripts\activate
 pip install -r requirements.txt
-# or for editable install:
 pip install -e .
 ```
 
-### Run a basic example
-(Replace the example command below with an actual script or entrypoint)
+If you use Poetry or PEP 517/518 (pyproject.toml), follow your preferred workflow.
+
+### Run a basic example (CLI)
+
+There is an example module that demonstrates a simple scenario. Run it with:
+
 ```bash
-# Example: run a sample scenario
 python -m missionsim.examples.sample_scenario
 ```
 
-If you provide the project's primary entrypoints (CLI or API example), I can replace the placeholders with exact commands.
+(Replace the module path with the canonical entrypoint if the project exposes a CLI or console script.)
 
-## Examples
-Add short example notebooks/scripts demonstrating:
-- a simple orbital propagation over N orbits,
-- a mission timeline with an autonomy agent responding to events,
-- integration with a quantum payload simulation.
+### Run a basic example (Python)
 
-Examples and notebooks should live in an `/examples` or `/notebooks` directory.
+Minimal (pseudo) example. Replace API calls with the real project symbols where appropriate:
 
-## Development
-- Run tests: `pytest` (adjust to your test runner)
-- Linting: `flake8` / `black` / `isort` (or the tools your project uses)
-- CI: add GitHub Actions workflows to run tests and linters on PRs
+```python
+# minimal_example.py — adapt to the real Mission‑Sim API
+from missionsim import Mission, Orbit, Propagator
 
-## Contributing
-Contributions are welcome. A suggested minimum set of files:
-- `CONTRIBUTING.md` — contribution guidelines, code style, PR process
-- `CODE_OF_CONDUCT.md` — expected community behavior
-- `ISSUE_TEMPLATE.md` / `PULL_REQUEST_TEMPLATE.md`
+# Create a mission and add a satellite
+mission = Mission(name="demo")
+orbit = Orbit.from_classical(a=7000e3, e=0.001, i=98.7)  # semi-major axis, ecc, inclination
+mission.add_satellite(name="sat-1", orbit=orbit)
 
-When opening issues or PRs, include:
-- a short description of the problem or feature,
-- steps to reproduce (for bugs),
-- minimal repro code or dataset snippets (if applicable).
+# Run the simulation for 1 orbit (example)
+prop = Propagator(method="two-body")
+mission.run(duration=5400, propagator=prop)
 
-## Citing & License
-Add a short citation note if you want academic users to cite the project, and add a `LICENSE` file (e.g., MIT, Apache-2.0).
+# Inspect outputs / logs / visualizations
+print(mission.summary())
+```
 
-## Contact
-Maintained by SPACE - ℵ. For questions or research collaborations, open an issue or reach out to the maintainers listed in `AUTHORS` (or the repo’s contact information).
+Tip: Replace the pseudo calls above with the concrete API once you confirm symbol names (I can update them if you share the actual module/class names).
 
 ---
+
+## Examples & notebooks
+
+Recommended layout:
+
+- /examples — runnable Python scripts for common scenarios
+- /notebooks — Jupyter notebooks showing:
+  - orbital propagation over N orbits
+  - mission timelines with autonomy agents responding to events
+  - quantum payload / comms link integration demos
+
+Add example notebooks and short README notes in the examples folder describing how to run each demo.
+
+---
+
+## Development
+
+- Tests: run with pytest
+  ```bash
+  pytest
+  ```
+- Linting and formatting:
+  ```bash
+  black .
+  isort .
+  flake8
+  ```
+- CI: add GitHub Actions workflows to run tests and linters on PRs. Suggested workflows:
+  - python-package (test matrix)
+  - lint (black/isort/flake8)
+  - docs (if you add Sphinx/Docs)
+- Local development:
+  ```bash
+  pip install -e .[dev]   # if you provide an extras_require for dev
+  ```
+
+---
+
+## Contributing
+
+Contributions are very welcome. Suggested repository files to include (if not already present):
+
+- CONTRIBUTING.md — how to contribute, branch/PR rules, review expectations
+- CODE_OF_CONDUCT.md — expected community behavior
+- ISSUE_TEMPLATE.md / PULL_REQUEST_TEMPLATE.md
+
+When opening issues or PRs, please include:
+
+- A short description of the problem or feature
+- Steps to reproduce (for bugs)
+- Minimal reproducer code / data (when applicable)
+- Tests or validation demonstrating the fix/feature
+
+If you’d like, I can draft CONTRIBUTING.md and templates in a follow-up.
+
+---
+
+## Citing
+
+If you use Mission‑Sim in academic work, please cite the project. Example BibTeX (edit as required):
+
+```bibtex
+@software{space-aleph_mission-sim_2026,
+  title = {Mission‑Sim},
+  author = {{SPACE — ℵ}},
+  year = {2026},
+  url = {https://github.com/SPACE-ALEPH/mission-sim},
+  version = {0.1.0},
+}
+```
+
+---
+
+## License
+
+Add a LICENSE file (e.g. MIT or Apache‑2.0). Example:
+
+- LICENSE: MIT
+
+(Ensure license text is present in the repository.)
+
+---
+
+## Contact
+
+Maintained by SPACE - ℵ. For questions, research collaborations, or to request features:
+
+- Open an issue on this repository
+- See AUTHORS or MAINTAINERS file for direct contacts
+- For publications/research inquiries, include your affiliation and a short proposal in the issue
+
+---
+
 Notes for maintainers:
-- Replace the placeholder commands (install/run/test) with the project-specific ones.
-- Consider adding badges (build, pypi, license, coverage) at the top of this README.
-- Add example notebooks and a short Quick Start screencast or GIF for onboarding.
+- Replace the placeholder commands (install/run/test) with the project‑specific ones if they differ.
+- Add badges (Actions, PyPI, license, coverage) at the top once you have CI and packaging in place.
+- Consider adding automated documentation (Sphinx / MkDocs) and hosting via GitHub Pages or Read the Docs.

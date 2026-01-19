@@ -48,3 +48,25 @@ def evaluate_with_trace(env):
         "mission_state": state,
         "reasons": reasons if reasons else ["All parameters nominal"]
     }
+
+
+def autonomy_decision(env):
+    """
+    High-level autonomy decision combining
+    state evaluation and action permission.
+    """
+
+    trace = evaluate_with_trace(env)
+    state = trace["mission_state"]
+
+    decision = {
+        "mission_state": state,
+        "quantum_ops_allowed": state in (
+            MissionState.NOMINAL,
+            MissionState.CONSTRAINED
+        ),
+        "trace": trace["reasons"]
+    }
+
+    return decision
+

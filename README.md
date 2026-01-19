@@ -179,6 +179,16 @@ If you use Mission‑Sim in academic work, please cite the project. Example BibT
 
 ---
 
+
+## Example Scenario
+
+Run a simple autonomy scenario (nominal → degraded → safe → recover):
+
+```bash python examples/scenario_nominal_degrade_recover.py
+
+
+
+
 ## License
 
 Add a LICENSE file (e.g. MIT or Apache‑2.0). Example:

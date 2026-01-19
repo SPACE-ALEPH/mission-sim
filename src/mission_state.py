@@ -27,3 +27,24 @@ def evaluate_mission_state(env):
         return MissionState.CONSTRAINED
 
     return MissionState.NOMINAL
+
+def evaluate_with_trace(env):
+    """
+    Evaluate mission state and return a traceable explanation.
+    """
+
+    reasons = []
+
+    if env["thermal_margin"] < 0:
+        reasons.append("Thermal margin violated")
+    if env["radiation_level"] > 1.0:
+        reasons.append("Radiation level exceeds limit")
+    if env["vibration_level"] > 0.7:
+        reasons.append("High vibration detected")
+
+    state = evaluate_mission_state(env)
+
+    return {
+        "mission_state": state,
+        "reasons": reasons if reasons else ["All parameters nominal"]
+    }

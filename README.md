@@ -1,220 +1,91 @@
-# Mission‑Sim
+# Mission-Sim
 
-[![Build Status](https://img.shields.io/badge/build-pending-lightgrey)]() [![PyPI](https://img.shields.io/badge/pypi-unstable-orange)]() [![License: MIT](https://img.shields.io/badge/license-MIT-blue)]() [![Docs](https://img.shields.io/badge/docs-inprogress-lightgrey)]()
+![Build Status](https://img.shields.io/badge/build-research-lightgrey)
+![License: MIT](https://img.shields.io/badge/license-MIT-blue)
+![Status](https://img.shields.io/badge/status-phase--0-orange)
 
-Mission‑Sim is a lightweight, research‑oriented simulation framework for developing and experimenting with quantum‑aware satellites and secure orbital systems. It provides modular building blocks for orbital mechanics, mission architecture, autonomy, sensors, and communications to accelerate reproducible space‑systems research.
+Mission-Sim is a research-stage mission simulation framework
+supporting the development and validation of mission-level autonomy
+for space systems.
 
-- Homepage / project: SPACE - ℵ
-- Status: Research prototype (API may change)
-
-## Table of contents
-
-- [Overview](#overview)
-- [Highlights](#highlights)
-- [Status](#status)
-- [Quick start](#quick-start)
-  - [Prerequisites](#prerequisites)
-  - [Install](#install)
-  - [Run a basic example (CLI)](#run-a-basic-example-cli)
-  - [Run a basic example (Python)](#run-a-basic-example-python)
-- [Examples & Notebooks](#examples--notebooks)
-- [Development](#development)
-- [Contributing](#contributing)
-- [Citing](#citing)
-- [License](#license)
-- [Contact](#contact)
-
-## Overview
-
-Mission‑Sim aims to reduce friction when building and experimenting with space‑mission concepts by offering:
-
-- modular simulators for orbital motion and mission operations
-- interfaces for autonomy, sensor, and communications models
-- hooks for quantum payload models and secure‑link experimentation
-- example scenarios and reproducible notebooks to accelerate research
-
-## Highlights
-
-- Lightweight orbital propagators and utility functions
-- Mission architecture primitives (tasks, agents, timelines)
-- Extensible sensors, comms links, and payload hooks
-- Designed for reproducibility and easy sharing of scenarios
-
-## Status
-
-Phase 0 — Research & simulation
-
-Active research prototype. Expect API changes and experimental modules. See the CHANGELOG and issues for roadmap and milestones.
+It serves as a conceptual and experimental foundation for ℵ – SYSTEMS,
+providing minimal, explainable building blocks for autonomy logic,
+mission-state evaluation, and scenario-based validation.
 
 ---
 
-## Quick start
+## Scope & Intent
 
-### Prerequisites
+Mission-Sim is intentionally limited in scope.
 
-- Python 3.10+ (adjust to the project’s supported versions)
-- Git
-- Optional: virtual environment tooling (venv, pipenv, poetry)
+It is designed to:
+- support mission-level decision logic
+- model environmental and system constraints
+- validate autonomy behavior through simulation
+- provide traceable, testable autonomy decisions
 
-### Install (local editable)
+It is **not** a flight simulator, control system, or hardware model.
 
-Clone and install locally:
+---
+
+## Relationship to ℵ – SYSTEMS
+
+Mission-Sim supports ℵ – SYSTEMS’ Phase 0 work on:
+
+- mission-state evaluation
+- autonomy decision explainability
+- action gating for fragile payloads
+- scenario-based validation
+
+Mission-Sim does **not** implement:
+- low-level control loops
+- hardware drivers
+- quantum payload control
+- performance-optimized orbital dynamics
+
+---
+
+## Current Status
+
+**Phase 0 - Research & Capability Grounding**
+
+- Research prototype
+- API stability is *not* guaranteed
+- Focused on clarity, traceability, and correctness
+- All behavior is simulation-only
+
+---
+
+## Core Concepts
+
+Mission-Sim currently centers on:
+
+- **Mission states**  
+  (`NOMINAL`, `CONSTRAINED`, `DEGRADED`, `SAFE`)
+
+- **Autonomy decisions**  
+  Deterministic evaluation of system and environment indicators
+
+- **Action gating**  
+  Explicit permission or prohibition of quantum operations
+
+- **Decision traceability**  
+  Every autonomy decision produces an explainable trace
+
+---
+
+## Quick Start (Research Use)
+
+### Requirements
+- Python 3.10+
+- No external services
+- No hardware dependencies
+
+### Install (local)
 
 ```bash
 git clone https://github.com/SPACE-ALEPH/mission-sim.git
 cd mission-sim
 python -m venv .venv
-source .venv/bin/activate   # macOS / Linux
-# On Windows: .venv\Scripts\activate
+source .venv/bin/activate
 pip install -r requirements.txt
-pip install -e .
-```
-
-If you use Poetry or PEP 517/518 (pyproject.toml), follow your preferred workflow.
-
-### Run a basic example (CLI)
-
-There is an example module that demonstrates a simple scenario. Run it with:
-
-```bash
-python -m missionsim.examples.sample_scenario
-```
-
-(Replace the module path with the canonical entrypoint if the project exposes a CLI or console script.)
-
-### Run a basic example (Python)
-
-Minimal (pseudo) example. Replace API calls with the real project symbols where appropriate:
-
-```python
-# minimal_example.py — adapt to the real Mission‑Sim API
-from missionsim import Mission, Orbit, Propagator
-
-# Create a mission and add a satellite
-mission = Mission(name="demo")
-orbit = Orbit.from_classical(a=7000e3, e=0.001, i=98.7)  # semi-major axis, ecc, inclination
-mission.add_satellite(name="sat-1", orbit=orbit)
-
-# Run the simulation for 1 orbit (example)
-prop = Propagator(method="two-body")
-mission.run(duration=5400, propagator=prop)
-
-# Inspect outputs / logs / visualizations
-print(mission.summary())
-```
-
-## Tests
-
-Run minimal sanity tests:
-
-```bash
-python run_tests.py
-
-
----
-
-## Examples & notebooks
-
-Recommended layout:
-
-- /examples — runnable Python scripts for common scenarios
-- /notebooks — Jupyter notebooks showing:
-  - orbital propagation over N orbits
-  - mission timelines with autonomy agents responding to events
-  - quantum payload / comms link integration demos
-
-
----
-
-## Development
-
-- Tests: run with pytest
-  ```bash
-  pytest
-  ```
-- Linting and formatting:
-  ```bash
-  black .
-  isort .
-  flake8
-  ```
-- CI: add GitHub Actions workflows to run tests and linters on PRs. Suggested workflows:
-  - python-package (test matrix)
-  - lint (black/isort/flake8)
-  - docs (if you add Sphinx/Docs)
-- Local development:
-  ```bash
-  pip install -e .[dev]   # if you provide an extras_require for dev
-  ```
-
----
-
-## Contributing
-
-Contributions are very welcome. Suggested repository files to include (if not already present):
-
-- CONTRIBUTING.md — how to contribute, branch/PR rules, review expectations
-- CODE_OF_CONDUCT.md — expected community behavior
-- ISSUE_TEMPLATE.md / PULL_REQUEST_TEMPLATE.md
-
-When opening issues or PRs, please include:
-
-- A short description of the problem or feature
-- Steps to reproduce (for bugs)
-- Minimal reproducer code / data (when applicable)
-- Tests or validation demonstrating the fix/feature
-
-If you’d like, I can draft CONTRIBUTING.md and templates in a follow-up.
-
----
-
-## Citing
-
-If you use Mission‑Sim in academic work, please cite the project. Example BibTeX (edit as required):
-
-```bibtex
-@software{space-aleph_mission-sim_2026,
-  title = {Mission‑Sim},
-  author = {{SPACE — ℵ}},
-  year = {2026},
-  url = {https://github.com/SPACE-ALEPH/mission-sim},
-  version = {0.1.0},
-}
-```
-
----
-
-
-## Example Scenario
-
-Run a simple autonomy scenario (nominal → degraded → safe → recover):
-
-```bash python examples/scenario_nominal_degrade_recover.py
-
-
-
-
-## License
-
-Add a LICENSE file (e.g. MIT or Apache‑2.0). Example:
-
-- LICENSE: MIT
-
-(Ensure license text is present in the repository.)
-
----
-
-## Contact
-
-Maintained by SPACE - ℵ. For questions, research collaborations, or to request features:
-
-- Open an issue on this repository
-- See AUTHORS or MAINTAINERS file for direct contacts
-- For publications/research inquiries, include your affiliation and a short proposal in the issue
-
----
-
-Notes for maintainers:
-- Replace the placeholder commands (install/run/test) with the project‑specific ones if they differ.
-- Add badges (Actions, PyPI, license, coverage) at the top once you have CI and packaging in place.
-- Consider adding automated documentation (Sphinx / MkDocs) and hosting via GitHub Pages or Read the Docs.

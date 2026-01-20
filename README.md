@@ -103,7 +103,13 @@ mission.run(duration=5400, propagator=prop)
 print(mission.summary())
 ```
 
-Tip: Replace the pseudo calls above with the concrete API once you confirm symbol names (I can update them if you share the actual module/class names).
+## Tests
+
+Run minimal sanity tests:
+
+```bash
+python run_tests.py
+
 
 ---
 
@@ -117,7 +123,6 @@ Recommended layout:
   - mission timelines with autonomy agents responding to events
   - quantum payload / comms link integration demos
 
-Add example notebooks and short README notes in the examples folder describing how to run each demo.
 
 ---
 

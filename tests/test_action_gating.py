@@ -12,3 +12,6 @@ def test_quantum_ops_not_allowed_in_degraded():
 
 def test_quantum_ops_not_allowed_in_safe():
     assert is_quantum_operation_allowed(MissionState.SAFE) is False
+
+def test_invariant_safe_state_never_allows_quantum_ops():
+    assert is_quantum_operation_allowed(MissionState.SAFE) is False

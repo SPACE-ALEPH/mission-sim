@@ -1,3 +1,9 @@
+_This repository provides simulation support for
+mission-level autonomy concepts defined in autonomy-notes._
+
+_It is not flight software._
+
+
 # Mission-Sim
 
 ![Build Status](https://img.shields.io/badge/build-research-lightgrey)
